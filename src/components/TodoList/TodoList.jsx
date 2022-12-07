@@ -1,10 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Button from "../Button/Button";
+import { deletTodo } from "../Redux/todoSlice";
 
 const TodoList = () => {
+    const dispatch = useDispatch();
     const todosData = useSelector((store) => store.todos);
+
+    const handleDeleteTodo = (id) => {
+        dispatch(deletTodo({ id: id }));
+    };
+
     const todoCard = () => {
         return todosData.map((item) => (
             <div
@@ -38,7 +45,7 @@ const TodoList = () => {
                             </svg>
                         </button>
                     </Link>
-                    <button>
+                    <button onClick={() => handleDeleteTodo(item.id)}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"

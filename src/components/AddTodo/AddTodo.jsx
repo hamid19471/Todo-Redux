@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
+import { addTodo } from "../Redux/todoSlice";
 import TextField from "../TextField/TextField";
 
 const AddTodo = () => {
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
 
     const [value, setValue] = useState({
@@ -13,7 +17,13 @@ const AddTodo = () => {
 
     const hadleAddTodo = () => {
         setValue({ todo: "", desc: "" });
-        console.log(value);
+        dispatch(
+            addTodo({
+                id: Math.floor(Math.random() * 1000),
+                todo: value.todo,
+                desc: value.desc,
+            }),
+        );
         navigate("/");
     };
 
